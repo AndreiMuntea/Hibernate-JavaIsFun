@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="userRepository" class="Repository.DBRepository.UserDBRepository">
+    </bean>
+
+    <bean id="participantRepository" class="Repository.DBRepository.ParticipantDBRepository">
+    </bean>
+
+    <bean id="trialRepository" class="Repository.DBRepository.TrialDBRepository">
+    </bean>
+
+    <bean id="ageCategoryRepository" class="Repository.DBRepository.AgeCategoryDBRepository">
+    </bean>
+
+    <bean id="userService" class="Services.UserServices">
+        <constructor-arg ref="userRepository"/>
+    </bean>
+
+    <bean id="participantService" class="Services.ParticipantServices">
+        <constructor-arg ref="participantRepository"/>
+        <constructor-arg ref="ageCategoryRepository"/>
+        <constructor-arg ref="trialRepository"/>
+    </bean>
+
+    <bean id="trialService" class="Services.TrialServices">
+        <constructor-arg ref="trialRepository"/>
+        <constructor-arg ref="ageCategoryRepository"/>
+    </bean>
+
+    <bean id="ageCategoryService" class="Services.AgeCategoryServices">
+        <constructor-arg ref="ageCategoryRepository"/>
+    </bean>
+
+    <bean id="serverImpl" class ="Server.ServerImpl">
+        <constructor-arg ref="ageCategoryService"/>
+        <constructor-arg ref="participantService"/>
+        <constructor-arg ref="trialService"/>
+        <constructor-arg ref="userService"/>
+    </bean>
+
+
+</beans>
